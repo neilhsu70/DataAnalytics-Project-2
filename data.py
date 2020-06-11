@@ -153,5 +153,8 @@ us_full_table['Date'] = pd.to_datetime(us_full_table['Date'])
 
 #aggregate data into State_Province wise and group them by Date and State_Province
 us_grouped = us_full_table.groupby(['Province_State', 'Country_Region', 'Lat', 'Long_', 'Date'])['Confirmed', 'Deaths', ].sum().reset_index()
-
-us_fig_data = us_full_table.groupby(['Province_State', 'Date'])['Confirmed', 'Deaths'].sum().reset_index().sort_values('Date', ascending=True)
+#for bar chart
+us_fig_data = us_grouped.groupby(['Province_State', 'Date'])['Confirmed', 'Deaths'].sum().reset_index().sort_values('Date', ascending=True)
+#make csv
+us_covid=us_fig_data.to_csv('US-COVID-19-time-series-clean-complete.csv')
+#US Covid 
