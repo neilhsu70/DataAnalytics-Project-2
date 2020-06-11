@@ -16,30 +16,37 @@ from datetime import datetime
 #get navbar from navbar.py
 
 #get heading and what is covid from heading.py
-#from heading import heading, covid
+from tally import world_tally
 #get plots from plots.py file
 from plots import global_animation, us_bar
+
+#headings
+global_map_heading = html.H2(children='World', className='mt-5 py-4 pb-3 text-center')
+us_heading =  html.H2(children='US', className='mt-5 py-4 pb-3 text-center')
 # Initialize the app
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.JOURNAL])
 
 
-
-
-
-#HTML code
-app.layout = html.Div(children=[
-    
-    html.Div(
+#Define the app
+app.layout = html.Div([
+    html.Div(children= [global_map_heading, 
         dcc.Graph(
             id='global',
             figure=global_animation()           
-            )),
-    html.Div(
+            )
+        ]
+    ),
+        dbc.Container([us_heading, 
+                html.Div(id='us-total'),
         dcc.Graph(
             id='us',
-            figure=us_bar()           
-            )),
-])   
+            figure=us_bar()  
+            )
+        ]
+    ),   
+  
+     ]
+)   
 
 # Run the app
 if __name__ == '__main__':
