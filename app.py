@@ -27,6 +27,7 @@ app.layout = html.Div(children=[
         id='global',
         figure=global_animation()           
         ),
+
 ])   
 
 # Run the app
