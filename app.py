@@ -13,21 +13,32 @@ import plotly.graph_objects as go
 import plotly.express as px
 #from scipy.interpolate import interp1d
 from datetime import datetime
-from plots import global_animation 
+#get navbar from navbar.py
+
+#get heading and what is covid from heading.py
+#from heading import heading, covid
+#get plots from plots.py file
+from plots import global_animation, us_bar
 # Initialize the app
-app = dash.Dash(__name__)
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.JOURNAL])
 
 
 
-# Define the app
+
 
 #HTML code
 app.layout = html.Div(children=[
-    dcc.Graph(
-        id='global',
-        figure=global_animation()           
-        ),
-
+    
+    html.Div(
+        dcc.Graph(
+            id='global',
+            figure=global_animation()           
+            )),
+    html.Div(
+        dcc.Graph(
+            id='us',
+            figure=us_bar()           
+            )),
 ])   
 
 # Run the app
