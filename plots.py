@@ -49,6 +49,29 @@ def global_animation(covid_df = pd.read_csv('COVID-19-time-series-clean-complete
     fig.layout.updatemenus[0].y=1.27
     return fig
 
-
+def us_bar(us_covid = pd.read_csv('US-COVID-19-time-series-clean-complete.csv')):
+    fig = go.Figure(go.Bar(x=us_covid["Date"], 
+                          y=us_covid["Confirmed"],
+                          name="Confirmed", 
+                          marker_color='red', opacity=.8
+                       ))
+    fig.add_trace(go.Bar(x=us_fig_data["Date"], 
+                        y=us_fig_data["Deaths"],
+                        name="Deaths",
+                        marker_color='grey', opacity=1
+                       ))
+    fig.update_layout(
+                        barmode='overlay', 
+                        xaxis={'categoryorder':'total ascending'},
+                        xaxis_type='category',
+                        title={
+                            'text': 'Cummulative COVID-19 US trend',
+                            'y':0.79,
+                            'x':0.45,
+                            'xanchor': 'center',
+                            'yanchor': 'top'},)
+    fig.update_xaxes(title= 'Time' ,showline=True)
+    fig.update_yaxes(title= 'Number of cases', showline=True)
+    return fig
 
    
