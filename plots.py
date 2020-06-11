@@ -55,8 +55,8 @@ def us_bar(us_covid = pd.read_csv('US-COVID-19-time-series-clean-complete.csv'))
                           name="Confirmed", 
                           marker_color='red', opacity=.8
                        ))
-    fig.add_trace(go.Bar(x=us_fig_data["Date"], 
-                        y=us_fig_data["Deaths"],
+    fig.add_trace(go.Bar(x=us_covid["Date"], 
+                        y=us_covid["Deaths"],
                         name="Deaths",
                         marker_color='grey', opacity=1
                        ))
@@ -65,7 +65,7 @@ def us_bar(us_covid = pd.read_csv('US-COVID-19-time-series-clean-complete.csv'))
                         xaxis={'categoryorder':'total ascending'},
                         xaxis_type='category',
                         title={
-                            'text': 'Cummulative COVID-19 US trend',
+                            'text': 'Cumulative COVID-19 US trend',
                             'y':0.79,
                             'x':0.45,
                             'xanchor': 'center',
