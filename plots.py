@@ -33,10 +33,10 @@ def global_animation(covid_df = pd.read_csv('COVID-19-time-series-clean-complete
                             hover_data= ['Country/Region'])
     
     fig.update_layout(
-        mapbox_style="carto-positron", width=900, height=700,
+        mapbox_style="carto-positron", width=700, height=500,
         margin={"r":1,"t":1,"l":1,"b":1})
     #update frame speed
-    fig.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 200
+    fig.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 500
     #update different layouts
     fig.layout.sliders[0].currentvalue.xanchor="center"
     fig.layout.sliders[0].currentvalue.offset=-100
