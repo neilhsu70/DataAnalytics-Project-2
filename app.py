@@ -114,53 +114,57 @@ app.layout = html.Div([
         html.P("Dashboard contributors: Bianca A. Hernandez, Ningning Du, Neil Hsu, Youngjung Choi", style = {'font-weight': 'bold'}, className='mt-3 py-2 pb-1 text-center'),
     ]),
     dbc.Row([dbc.Col(first_card), dbc.Col(second_card), dbc.Col(third_card), dbc.Col(fourth_card)], className='justify-content-center',),
-
-   dbc.Row(
-       [
-          dbc.Col(
-              dbc.Container([
-                html.Div([
-                html.H2('What is COVID-19?', className='mt-5 py-4 pb-3 text-center'),
-                html.P("COVID-19 is a disease caused by a new strain of coronavirus. 'CO' stands for corona, 'VI' for virus, and 'D' for disease."),
-                html.P("Symptoms can include fever, cough and shortness of breath. In more severe cases, infection can cause pneumonia or breathing difficulties. More rarely, the disease can be fatal."),
-                html.P("The virus is transmitted through direct contact with respiratory droplets of an infected person (generated through coughing and sneezing)."),
-                html.H4("Countries with most confirmed COVID-19 cases", style = {'font-weight': 'bold'}, className='mt-3 py-2 pb-1 text-center'),
-                html.Div(dcc.Graph(
-                    id='top-ten',
-                    figure=bubble_fig))    
+    html.Br(),
+    dbc.Card([
+       dbc.CardBody([
+            dbc.Row([
+                 dbc.Col(
+                    dbc.Container([
+                    html.Div([
+                    html.H2('What is COVID-19?', className='mt-5 py-4 pb-3 text-center'),
+                    html.P("COVID-19 is a disease caused by a new strain of coronavirus. 'CO' stands for corona, 'VI' for virus, and 'D' for disease."),
+                    html.P("Symptoms can include fever, cough and shortness of breath. In more severe cases, infection can cause pneumonia or breathing difficulties. More rarely, the disease can be fatal."),
+                    html.P("The virus is transmitted through direct contact with respiratory droplets of an infected person (generated through coughing and sneezing)."),
+                    html.H4("Countries with most confirmed COVID-19 cases", style = {'font-weight': 'bold'}, className='mt-3 py-2 pb-1 text-center'),
+                    html.Div(dcc.Graph(
+                        id='top-ten',
+                        figure=bubble_fig))    
                 ])])),
 
-          dbc.Col(
-              dbc.Container([global_map_heading,
-                html.Div(id='global-total'), 
-                dcc.Graph(
-                    id='global-viz',
-                    figure=global_animation()
-                    ),
-                html.Div([
-                    dbc.Container([
-                        html.H4("To prevent infection and to slow transmission of COVID-19, do the following:", style = {'font-weight': 'bold'}, className='mt-3 py-2 pb-1 text-center'),
-                    ]),
+                dbc.Col(
+                    dbc.Container([global_map_heading,
+                    html.Div(id='global-total'), 
+                    dcc.Graph(
+                        id='global-viz',
+                        figure=global_animation()
+                        ),
+                    html.Div([
+                        dbc.Container([
+                            html.H4("To prevent infection and to slow transmission of COVID-19, do the following:", style = {'font-weight': 'bold'}, className='mt-3 py-2 pb-1 text-center'),
+                        ]),
                 
-                html.P("Wash your hands regularly with soap and water, or clean them with alcohol-based hand rub. Avoid touching your face. Stay home if you feel unwell."),
-                html.P("Practice physical distancing by avoiding unnecessary travel and staying away from large groups of people."),
-                html.P("Cover your mouth and nose when coughing or sneezing."),    
-                ])           
-                ]
-              )    
+                    html.P("Wash your hands regularly with soap and water, or clean them with alcohol-based hand rub. Avoid touching your face. Stay home if you feel unwell."),
+                    html.P("Practice physical distancing by avoiding unnecessary travel and staying away from large groups of people."),
+                    html.P("Cover your mouth and nose when coughing or sneezing."),    
+                    ])           
+                    ]
+              )     
             )
         ]
-    ),        
-                          
-
-    dbc.Container([world_heading, 
-        html.Div(id='us-total'),
+    ) ]) ]), 
+    html.Br(),       
+    dbc.Card([
+        dbc.CardBody([
+            dbc.Container([world_heading, 
+            html.Div(id='us-total'),
             dcc.Graph(
                 id='us-viz',
-                figure=plot_cases_for_country('World') 
-            )
-        ]
-    ),
+                figure=plot_cases_for_country('World'))]),
+
+        ])
+
+    ]),
+    
 
     dbc.Container([us_heading, 
         html.Div(id='us-total2'),
