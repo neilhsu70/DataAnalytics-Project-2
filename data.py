@@ -158,3 +158,6 @@ us_fig_data = us_grouped.groupby(['Province_State', 'Date'])['Confirmed', 'Death
 #make csv
 us_covid=us_fig_data.to_csv('US-COVID-19-time-series-clean-complete.csv')
 #US Covid 
+us_covid=pd.read_csv('US-COVID-19-time-series-clean-complete.csv')
+us_covid_day = us_fig_data.groupby(['Date']).sum().reset_index()
+us_covid_day
