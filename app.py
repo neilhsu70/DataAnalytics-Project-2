@@ -79,8 +79,8 @@ from plots import global_animation, us_bar
 
 tally_heading = html.H2(children='World Cases Tally', className='mt-5 py-4 pb-3 text-center')
 global_map_heading = html.H2(children='World outbreaks of COVID-19 across time', className='mt-5 py-4 pb-3 text-center')
-us_heading =  html.H2(children='US Cases: Confirmed, recovered and deaths', className='mt-5 py-4 pb-3 text-center')
-world_heading =  html.H2(children='World Cases: Confirmed, recovered and deaths', className='mt-5 py-4 pb-3 text-center')
+us_heading =  html.H2(children='US Cases: Confirmed, recovered and deaths', className='mt-3 py-2 pb-1 text-center')
+world_heading =  html.H2(children='World Cases: Confirmed, recovered and deaths', className='mt-3 py-2 pb-1 text-center')
 
 # Initialize the app
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.JOURNAL])
@@ -168,6 +168,9 @@ app.layout = html.Div([
             )
         ]
     ),
+    dbc.Container([
+        html.P('Data Source: COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University', style = {'font-weight': 'bold'}, className='mt-3 py-2 pb-1 text-center'),
+    ]),
 
 ]
 )   
