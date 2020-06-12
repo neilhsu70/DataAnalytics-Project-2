@@ -33,9 +33,42 @@ country_df.sort_values('Confirmed', ascending=False, inplace=True)
 
 bubble_fig = px.scatter(country_df.head(10), x = 'Country', y ='Confirmed', size = 'Confirmed', color = 'Country', hover_name = 'Country',size_max = 60)
            
-#get navbar from navbar.py
 
 #get heading and what is covid from heading.py
+
+
+df_list = [confirmed_df, recovered_df, death_df]
+
+def plot_cases_for_country(ad):
+    labels = ['Confirmed', 'Recoverd', 'Deaths']
+    colors = ['blue', 'green', 'red']
+    mode_size = [4,4,4]
+    line_size = [4,4,4]
+
+
+
+    fig = go.Figure()
+    
+    for i, df in enumerate (df_list):
+        if ad =='world' or ad =='World':
+            x_data = np.array(list (df.iloc[:,5:].columns))
+            y_data = np.sum(np.asarray(df.iloc[:,5:]),axis = 0)
+        
+        else:
+            x_data = np.array(list (df.iloc[:,5:].columns))
+            y_data = np.sum(np.asarray(df[df['Country']==ad].iloc[:,5:]),axis = 0)
+                        
+        fig.add_trace(go.Scatter(x=x_data, y=y_data, mode='lines+markers',name=labels[i],
+            line=dict(color=colors[i], width=line_size[i]),
+            connectgaps=True,
+            text = "Total " +str(labels[i]+ ":" +str(y_data[-1]))
+         )) 
+    return fig
+
+
+
+
+
 
 #get plots from plots.py file
 from plots import global_animation, us_bar
@@ -46,7 +79,9 @@ from plots import global_animation, us_bar
 
 tally_heading = html.H2(children='World Cases Tally', className='mt-5 py-4 pb-3 text-center')
 global_map_heading = html.H2(children='World outbreaks of COVID-19 across time', className='mt-5 py-4 pb-3 text-center')
-us_heading =  html.H2(children='US Cases: Confirmed and Deaths', className='mt-5 py-4 pb-3 text-center')
+us_heading =  html.H2(children='US Cases: Confirmed, recovered and Deaths', className='mt-5 py-4 pb-3 text-center')
+world_heading =  html.H2(children='World Cases: Confirmed, recovered and Deaths', className='mt-5 py-4 pb-3 text-center')
+
 # Initialize the app
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.JOURNAL])
 
@@ -108,10 +143,20 @@ app.layout = html.Div([
         html.Div(id='us-total'),
             dcc.Graph(
                 id='us-viz',
-                figure=us_bar()  
+                figure=plot_cases_for_country('US') 
             )
         ]
-    ),  
+    ),
+
+    dbc.Container([world_heading, 
+        html.Div(id='us-total2'),
+            dcc.Graph(
+                id='us-viz2',
+                figure=plot_cases_for_country('World') 
+            )
+        ]
+    ),
+
 ]
 )   
 
