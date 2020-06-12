@@ -73,7 +73,27 @@ def plot_cases_for_country(ad):
 #get plots from plots.py file
 from plots import global_animation, us_bar
 
-#data
+#cards for tally
+first_card=dbc.Card([
+    dbc.CardBody(children=[html.H4('Confirmed', style = {'padding-top': '5px','font-weight':'bold', 'color':'#5e4fa2'}),
+        html.Div([dbc.Button(country_df['Confirmed'].sum(), color="#5e4fa2", size = "lg")])],
+        className='text-center')
+                    ]),
+second_card=dbc.Card([
+    dbc.CardBody(children = [html.H4('Recovered', style = {'padding-top': '5px', 'font-weight':'bold', 'color':'#66c2a5'}),
+        html.Div([dbc.Button(country_df['Recovered'].sum(), color="#66c2a5", size = "lg")])],
+        className='text-center'),
+                    ]),
+third_card=dbc.Card([
+    dbc.CardBody(children = [html.H4('Deaths', style = {'padding-top': '5px', 'font-weight':'bold', 'color':'#d53e50'}),
+        html.Div([dbc.Button(country_df['Deaths'].sum(), color="#d53e50", size = "lg")])],
+        className='text-center'),
+                    ]),
+fourth_card=dbc.Card([
+    dbc.CardBody(children = [html.H4('Active', style = {'padding-top': '5px', 'font-weight':'bold', 'color':'#f46d43',}),
+        html.Div([dbc.Button(country_df['Active'].sum(), color="#f46d43", size = "lg")])],
+        className='text-center'),
+])
 
 #headings
 
@@ -91,28 +111,10 @@ app.layout = html.Div([
 
     dbc.Container([
         html.H1(children='COVID-19 Pandemic Analysis Dashboard', className='mt-5 py-4 pb-3 text-center'),
-        html.P("Dashboard contributors: Bianca Hernandez, Ningning Du, Neil Hsu, Youngjung Choi", style = {'font-weight': 'bold'}, className='mt-3 py-2 pb-1 text-center'),
+        html.P("Dashboard contributors: Bianca A. Hernandez, Ningning Du, Neil Hsu, Youngjung Choi", style = {'font-weight': 'bold'}, className='mt-3 py-2 pb-1 text-center'),
     ]),
+    dbc.Row([dbc.Col(first_card), dbc.Col(second_card), dbc.Col(third_card), dbc.Col(fourth_card)], className='justify-content-center',),
 
-    dbc.Row(
-            [
-                dbc.Col(children = [html.H4('Confirmed', style = {'padding-top': '5px','font-weight':'bold', 'color':'#5e4fa2'}),
-                        html.Div([dbc.Button(country_df['Confirmed'].sum(), color="#5e4fa2", size = "lg")])],
-                        width=3, className='text-center'),
-                
-                dbc.Col(children = [html.H4('Recovered', style = {'padding-top': '5px', 'font-weight':'bold', 'color':'#66c2a5'}),
-                        html.Div([dbc.Button(country_df['Recovered'].sum(), color="#66c2a5", size = "lg")])],
-                        width=3, className='text-center'),
-                
-                dbc.Col(children = [html.H4('Deaths', style = {'padding-top': '5px', 'font-weight':'bold', 'color':'#d53e50'}),
-                        html.Div([dbc.Button(country_df['Deaths'].sum(), color="#d53e50", size = "lg")])],
-                        width=3, className='text-center'),
-                
-                dbc.Col(children = [html.H4('Active', style = {'padding-top': '5px', 'font-weight':'bold', 'color':'#f46d43'}),
-                        html.Div([dbc.Button(country_df['Active'].sum(), color="#f46d43", size = "lg")])],
-                        width=3, className='text-center'),
-            ], className='justify-content-center'),
-    
    dbc.Row(
        [
           dbc.Col(
