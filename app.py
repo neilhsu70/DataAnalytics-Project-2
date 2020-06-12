@@ -183,9 +183,12 @@ full_grouped[cols] = full_grouped[cols].astype('int')
 # 
 full_grouped['New cases'] = full_grouped['New cases'].apply(lambda x: 0 if x<0 else x)
 
-full_grouped.to_csv('COVID-19-time-series-clean-complete.csv')
+# full_grouped.to_csv('COVID-19-time-series-clean-complete.csv')
 
-figure_df=pd.read_csv('COVID-19-time-series-clean-complete.csv')
+# figure_df=pd.read_csv('COVID-19-time-series-clean-complete.csv')
+figure_df = full_grouped
+#from plots.py
+full_grouped["Date"] = full_grouped["Date"].dt.strftime('%Y/%m/%d')
 
 # us_confirmed = pd.read_csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv')
 # # death_df =  pd.read_csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv')
@@ -234,9 +237,10 @@ us_grouped = us_full_table.groupby(['Province_State', 'Country_Region', 'Lat', '
 #for bar chart
 us_fig_data = us_grouped.groupby(['Province_State', 'Date'])['Confirmed', 'Deaths'].sum().reset_index().sort_values('Date', ascending=True)
 #make csv
-us_covid=us_fig_data.to_csv('US-COVID-19-time-series-clean-complete.csv')
-#US Covid 
-us_covid=pd.read_csv('US-COVID-19-time-series-clean-complete.csv')
+# us_covid=us_fig_data.to_csv('US-COVID-19-time-series-clean-complete.csv')
+# #US Covid 
+# us_covid=pd.read_csv('US-COVID-19-time-series-clean-complete.csv')
+us_covid = us_fig_data
 us_covid_day = us_fig_data.groupby(['Date']).sum().reset_index()
 # us_covid_day
 
@@ -258,6 +262,9 @@ confirmed_df.rename(columns={'Country/Region': 'Country'}, inplace=True)
 recovered_df.rename(columns={'Country/Region': 'Country'}, inplace=True)
 country_df.rename(columns={'Country_Region': 'Country', 'Long_': 'Long'}, inplace=True)
 country_df.sort_values('Confirmed', ascending=False, inplace=True)
+
+
+### functions to plot figures
 
 bubble_fig = px.scatter(country_df.head(10), x = 'Country', y ='Confirmed', size = 'Confirmed', color = 'Country', hover_name = 'Country',size_max = 60)
            
@@ -299,7 +306,65 @@ def plot_cases_for_country(ad):
 
 
 #get plots from plots.py file
-from plots import global_animation, us_bar
+# from plots import global_animation, us_bar
+def global_animation():
+    fig = px.scatter_mapbox(full_grouped,
+                            lat="Lat", 
+                            lon="Long",                       
+                            color="Confirmed", 
+                            size=full_grouped['Confirmed']**0.5*50,
+                            template='seaborn',
+                            color_continuous_scale="rainbow", 
+                            size_max=50, 
+                            animation_frame='Date',
+                            center=dict({'lat': 32, 'lon': 4}), 
+                            zoom=0.7, 
+                            hover_data= ['Country/Region'])
+    
+    fig.update_layout(
+        mapbox_style="carto-positron", width=900, height=700,
+        margin={"r":1,"t":1,"l":1,"b":1})
+    #update frame speed
+    fig.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 200
+    #update different layouts
+    fig.layout.sliders[0].currentvalue.xanchor="center"
+    fig.layout.sliders[0].currentvalue.offset=-100
+    fig.layout.sliders[0].currentvalue.prefix=""
+    fig.layout.sliders[0].len=.9
+    fig.layout.sliders[0].currentvalue.font.color="black"
+    fig.layout.sliders[0].currentvalue.font.size=18
+    fig.layout.sliders[0].y= 1.1
+    fig.layout.sliders[0].x= 0.1
+    fig.layout.updatemenus[0].y=1.27
+    return fig
+
+
+# def us_bar(us_covid = pd.read_csv('US-COVID-19-time-series-clean-complete.csv')):
+#     fig = go.Figure(go.Bar(x=us_covid["Date"], 
+#                           y=us_covid["Confirmed"],
+#                           name="Confirmed", 
+#                           marker_color='red', opacity=.8
+#                        ))
+#     fig.add_trace(go.Bar(x=us_covid["Date"], 
+#                         y=us_covid["Deaths"],
+#                         name="Deaths",
+#                         marker_color='grey', opacity=1
+#                        ))
+#     fig.update_layout(
+#                         barmode='overlay', 
+#                         xaxis={'categoryorder':'total ascending'},
+#                         xaxis_type='category',
+#                         title={
+#                             'text': 'Cumulative COVID-19 US trend',
+#                             'y':0.79,
+#                             'x':0.45,
+#                             'xanchor': 'center',
+#                             'yanchor': 'top'},)
+#     fig.update_xaxes(title= 'Time' ,showline=True)
+#     fig.update_yaxes(title= 'Number of cases', showline=True)
+#     return fig
+
+   
 
 #data
 
