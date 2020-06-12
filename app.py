@@ -25,8 +25,8 @@ from plots import global_animation, us_bar
 #headings
 
 tally_heading = html.H2(children='World Cases Tally', className='mt-5 py-4 pb-3 text-center')
-global_map_heading = html.H2(children='World outbreaks of COVID-19 across time', className='mt-5 py-4 pb-3 text-left')
-us_heading =  html.H2(children='US Cases: Confirmed and Deaths', className='mt-5 py-4 pb-3 text-left')
+global_map_heading = html.H2(children='World outbreaks of COVID-19 across time', className='mt-5 py-4 pb-3 text-center')
+us_heading =  html.H2(children='US Cases: Confirmed and Deaths', className='mt-5 py-4 pb-3 text-center')
 # Initialize the app
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.JOURNAL])
 
@@ -46,25 +46,31 @@ app.layout = html.Div([
         dbc.Col(html.Div("Recoverd", className='mt-5 py-4 pb-3 text-center')),   
         ]
     ),
-
-    dbc.Container(
-    [
-        html.Div([
-            html.H2('What is COVID-19?', className='mt-5 py-4 pb-3 text-left'),
-            html.P("A coronavirus is a kind of common virus that can cause respiratory infections. Most coronaviruses aren't dangerous."),
-            html.P("COVID-19 is a disease that can cause respiratory tract infections and can affect upper respiratory tract (sinuses, nose, and throat) or lower respiratory tract (windpipe and lungs). It's caused by a coronavirus named SARS-CoV-2."),
-            html.P("It spreads mainly through person-to-person contact. Infections range from mild to serious.")
-        ])
-    ]),
     
-    dbc.Container([global_map_heading,
-        html.Div(id='global-total'), 
-            dcc.Graph(
-                id='global-viz',
-                figure=global_animation()
-            )           
-        ]
-    ),                                 
+   dbc.Row(
+       [
+          dbc.Col(
+              dbc.Container([
+                html.Div([
+                html.H2('What is COVID-19?', className='mt-5 py-4 pb-3 text-center'),
+                html.P("A coronavirus is a kind of common virus that can cause respiratory infections. Most coronaviruses aren't dangerous."),
+                html.P("COVID-19 is a disease that can cause respiratory tract infections and can affect upper respiratory tract (sinuses, nose, and throat) or lower respiratory tract (windpipe and lungs). It's caused by a coronavirus named SARS-CoV-2."),
+                html.P("It spreads mainly through person-to-person contact. Infections range from mild to serious.")
+                ])])),
+
+          dbc.Col(
+              dbc.Container([global_map_heading,
+                html.Div(id='global-total'), 
+                dcc.Graph(
+                    id='global-viz',
+                    figure=global_animation()
+                    )           
+                ]
+            )
+          ) 
+       ]
+   ), 
+                          
 
     dbc.Container([us_heading, 
         html.Div(id='us-total'),
