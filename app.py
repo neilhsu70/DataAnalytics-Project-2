@@ -108,11 +108,15 @@ app = dash.Dash(__name__, external_stylesheets=[dbc.themes.JOURNAL])
 
 #Define the app
 app.layout = html.Div([
+    dbc.Card([
+        dbc.CardBody([
+            dbc.Container([
+            html.H1(children='COVID-19 Pandemic Analysis Dashboard', className='mt-5 py-4 pb-3 text-center'),
+            html.P("Dashboard contributors: Bianca A. Hernandez, Ningning Du, Neil Hsu, Youngjung Choi", style = {'font-weight': 'bold'}, className='mt-3 py-2 pb-1 text-center'),
+    ])])]),
+    
+    html.Br(),
 
-    dbc.Container([
-        html.H1(children='COVID-19 Pandemic Analysis Dashboard', className='mt-5 py-4 pb-3 text-center'),
-        html.P("Dashboard contributors: Bianca A. Hernandez, Ningning Du, Neil Hsu, Youngjung Choi", style = {'font-weight': 'bold'}, className='mt-3 py-2 pb-1 text-center'),
-    ]),
     dbc.Row([dbc.Col(first_card), dbc.Col(second_card), dbc.Col(third_card), dbc.Col(fourth_card)], className='justify-content-center',),
     html.Br(),
     dbc.Card([
@@ -164,16 +168,20 @@ app.layout = html.Div([
         ])
 
     ]),
-    
-
-    dbc.Container([us_heading, 
-        html.Div(id='us-total2'),
+    html.Br(),
+    dbc.Card([
+        dbc.CardBody([
+            dbc.Container([us_heading, 
+            html.Div(id='us-total2'),
             dcc.Graph(
                 id='us-viz2',
                 figure=plot_cases_for_country('US') 
             )
         ]
-    ),
+    )])]),
+
+    html.Br(),
+
     dbc.Container([
         html.P('Data Source: COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University', style = {'font-weight': 'bold'}, className='mt-3 py-2 pb-1 text-center'),
     ]),
